@@ -93,7 +93,7 @@ namespace ConsoleApp1
       Console.WriteLine("連續 5 次洗牌:");
       for (int round = 1; round <= 5; round++)
       {
-        lottery.Shuffle(strArray);
+        lottery.SecureShuffle(strArray);
         Console.WriteLine($"第 {round} 次: [{string.Join(",", strArray)}]");
       }
 
@@ -113,13 +113,13 @@ namespace ConsoleApp1
 
       Console.WriteLine("\n=== 測試洗牌 {0} 筆 ===", dataCount);
 
-      var strArray = Enumerable.Range(0, dataCount).Select(c => $"{c:000}").ToArray();
+      var strArray = Enumerable.Range(0, dataCount).Select(c => $"B{c:000000}").ToArray();
 
       Console.WriteLine($"原始順序: [{string.Join(",", strArray)}]");
       Console.WriteLine("連續 {0} 次洗牌:", shuffleCount);
       for (int round = 1; round <= shuffleCount; round++)
       {
-        lottery.Shuffle(strArray);
+        lottery.SecureShuffle(strArray);
         Console.WriteLine($"第 {round} 次: [{string.Join(",", strArray)}]");
       }
 
