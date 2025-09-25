@@ -113,7 +113,7 @@ namespace ConsoleApp1
 
       Console.WriteLine("\n=== 測試洗牌 {0} 筆 ===", dataCount);
 
-      var strArray = Enumerable.Range(0, dataCount).Select(c => $"{c:000}").ToArray();
+      var strArray = Enumerable.Range(0, dataCount).Select(c => $"B{c:000000}").ToArray();
 
       Console.WriteLine($"原始順序: [{string.Join(",", strArray)}]");
       Console.WriteLine("連續 {0} 次洗牌:", shuffleCount);
