@@ -66,6 +66,7 @@ namespace ConsoleApp1
       // 示範 4: 多次洗牌驗證隨機性
       Console.WriteLine("\n=== 隨機性驗證 ===");
       int[] testArray = { 1, 2, 3, 4, 5 };
+
       Console.WriteLine("連續 5 次洗牌結果:");
 
       for (int round = 1; round <= 5; round++)
@@ -77,14 +78,55 @@ namespace ConsoleApp1
     }
 
     /// <summary>
-    /// 測試洗牌
+    /// 測試洗牌數次後再抽獎。
     /// </summary>
-    public static void BasicTest2()
+    public static void TestShuffleAndDraw()
     {
       // 主程式示範
       using var lottery = new FisherYatesLottery();
 
-      
+      Console.WriteLine("\n=== 測試洗牌 26 筆 ===");
+
+      var strArray = Enumerable.Range(1, 26).Select(c => $"{c:00}").ToArray();
+
+      Console.WriteLine($"原始順序: [{string.Join(",", strArray)}]");
+      Console.WriteLine("連續 5 次洗牌:");
+      for (int round = 1; round <= 5; round++)
+      {
+        lottery.Shuffle(strArray);
+        Console.WriteLine($"第 {round} 次: [{string.Join(",", strArray)}]");
+      }
+
+      Console.WriteLine("再抽取前 3 名中獎者:");
+      var winnerArray = lottery.DrawLottery(strArray, 3, useSecureRandom: true);
+      Console.WriteLine($"中獎者: [{string.Join(",", winnerArray)}]");
     }
+
+
+    /// <summary>
+    /// 測試洗牌數次後再抽獎(1000筆)。
+    /// </summary>
+    public static void TestShuffleAndDraw_MoreData(int dataCount, int shuffleCount, int winnerCount)
+    {
+      // 主程式示範
+      using var lottery = new FisherYatesLottery();
+
+      Console.WriteLine("\n=== 測試洗牌 {0} 筆 ===", dataCount);
+
+      var strArray = Enumerable.Range(0, dataCount).Select(c => $"{c:000}").ToArray();
+
+      Console.WriteLine($"原始順序: [{string.Join(",", strArray)}]");
+      Console.WriteLine("連續 {0} 次洗牌:", shuffleCount);
+      for (int round = 1; round <= shuffleCount; round++)
+      {
+        lottery.Shuffle(strArray);
+        Console.WriteLine($"第 {round} 次: [{string.Join(",", strArray)}]");
+      }
+
+      Console.WriteLine("再抽取前 {0} 名中獎者:", winnerCount);
+      var winnerArray = lottery.DrawLottery(strArray, winnerCount, useSecureRandom: true);
+      Console.WriteLine($"中獎者: [{string.Join(",", winnerArray)}]");
+    }
+
   }
 }
